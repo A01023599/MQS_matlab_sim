@@ -4,19 +4,16 @@ average = mean(tickets_received);
 
 desired_ammount = 20;
 
-%Probability of exactly desired_amount
 probability_desired = poisson_prob(desired_ammount, average);
 
 disp("Probability of "+desired_ammount+" in any hour is: "+probability_desired)
 
-%Probability of desired_amount or fewer
 total = 0;
 for i = 0:1:20
-    total = total + poisson_prob(i,average);
+    total = total + poission_prob(i,average)
 end
 
-disp("Probability of "+desired_ammount+" or fewer tickets in any hour is: "+total)
-
+disp("Probability of 
 
 %for each = [15 16 17 18 19 20]
     %probabilities poisson_prob(tickets_received, average)
