@@ -4,23 +4,35 @@ average = mean(tickets_received);
 
 desired_ammount = 20;
 
+%Probability of exactly desired_amount
 probability_desired = poisson_prob(desired_ammount, average);
 
 disp("Probability of "+desired_ammount+" in any hour is: "+probability_desired)
 
-total = 0;
-for i = 0:1:20
-    total = total + poission_prob(i,average)
+%Probability of desired_amount or fewer
+probabilities = zeros(desired_ammount,1);
+%total = 0;
+for i = 0:1:desired_ammount
+    %total = total + poisson_prob(i,average);
+    probabilities(i+1) = poisson_prob(i,average);
 end
 
-disp("Probability of 
-
-%for each = [15 16 17 18 19 20]
-    %probabilities poisson_prob(tickets_received, average)
-%    poisson_prob(each, average)
-%end
+disp("Probability of "+desired_ammount+" or fewer tickets in any hour is: "+sum(probabilities))
 
 
+stairs(0:desired_ammount,probabilities)
+xlabel('Amount of tickets')
+ylabel('Probability ')
+title('Probabilities of n tickets arriving during any one hour period')
+labels = arrayFun(floatToString, probabilities);
+text(0:desired_ammount, probabilities, labels, 'VerticalAlignment','top','HorizontalAlignment','center')
+%text(x,y,labels,'VerticalAlignment','bottom','HorizontalAlignment','right')
+
+%FUNCTIONS
 function prob = poisson_prob(k,L)
-    prob = ((L.^k)*exp(-L))/factorial(k);
+    prob = ((L^k)*exp(-L))/factorial(k);
+end
+
+function res = floatToString(n)
+    res = num2str(n,6);
 end

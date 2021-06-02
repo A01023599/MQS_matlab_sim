@@ -7,23 +7,26 @@ desired_ammount = 20;
 %Probability of exactly desired_amount
 probability_desired = poisson_prob(desired_ammount, average);
 
-disp("Probability of "+desired_ammount+" in any hour is: "+probability_desired)
+%disp("Probability of "+desired_ammount+" in any hour is: "+probability_desired)
 
 %Probability of desired_amount or fewer
-total = 0;
-for i = 0:1:20
-    total = total + poisson_prob(i,average);
+probabilities = zeros(desired_ammount,1);
+for i = 0:1:desired_ammount
+    probabilities(i+1) = poisson_prob(i,average);
 end
 
-disp("Probability of "+desired_ammount+" or fewer tickets in any hour is: "+total)
+%disp("Probability of "+desired_ammount+" or fewer tickets in any hour is: "+sum(probabilities))
 
+%PLOTTING
+stairs(0:desired_ammount,probabilities*100)
+xlabel('Amount of tickets')
+ylabel('Probability (%)')
+title('Probabilities of n tickets arriving during any one hour period')
+grid on
+text(2, 2.4, "Probability of "+desired_ammount+" in any hour is: "+(probability_desired*100)+"%") 
+text(2, 2.2, "Probability of "+desired_ammount+" or fewer tickets in any hour is: "+(100*sum(probabilities))+"%")
 
-%for each = [15 16 17 18 19 20]
-    %probabilities poisson_prob(tickets_received, average)
-%    poisson_prob(each, average)
-%end
-
-
+%FUNCTIONS
 function prob = poisson_prob(k,L)
-    prob = ((L.^k)*exp(-L))/factorial(k);
+    prob = ((L^k)*exp(-L))/factorial(k);
 end
